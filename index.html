@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JSON Form Tester</title>
+  <link rel="stylesheet" style="text/css" href="deps/opt/bootstrap.css" />
+</head>
+
+<body style="padding:10px">
+	<h3>Paste JSON string:</h3>
+	<textarea id="jsontring"></textarea><br />
+	<button id="jsonstring2form">Convert</button><br />
+	<h3>Get JSON from endpoint:</h3>
+	<input type="text" id="jsonurl"><br />
+	<button id="jsonurl2form">Convert</button><br />
+	<hr>
+	<h3>Form:</h3>
+	<form id="testform"></form>
+</body>
+
+<script type="text/javascript" src="deps/jquery.min.js"></script>
+<script type="text/javascript" src="deps/underscore.js"></script>
+<script type="text/javascript" src="deps/opt/jsv.js"></script>
+<script type="text/javascript" src="lib/jsonform.js"></script>
+<script type="text/javascript">
+	$('#jsonstring2form').click(function() {
+		populateForm(JSON.parse($('#jsontring').val()));
+	});
+	$('#jsonurl2form').click(function() {
+		$.get($('#jsonurl').val(), function(res) {
+			populateForm(res);
+		});
+	});
+
+	function populateForm(data) {
+		$('#testform').empty();
+		$('#testform').jsonForm(data);
+	}
+</script>
+
+</html>
